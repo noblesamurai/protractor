@@ -165,3 +165,14 @@ function AsyncCtrl($scope, $http, $timeout) {
   }
 };
 AsyncCtrl.$inject = ['$scope', '$http', '$timeout'];
+
+function NestedCtrl($scope) {
+  $scope.item = {
+    reusedBinding: 'outer'
+  }
+
+  $scope.wrapper = [{
+    resuedBinding: 'inner'
+  }]
+};
+NestedCtrl.$inject = ['$scope'];

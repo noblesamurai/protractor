@@ -3,7 +3,7 @@ var util = require('util');
 describe('finding elements', function() {
   var ptor;
 
-  describe('in forms', function() {
+  xdescribe('in forms', function() {
     ptor = protractor.getInstance();
 
     beforeEach(function() {
@@ -125,7 +125,7 @@ describe('finding elements', function() {
     });
   });
 
-  describe('further examples', function() {
+  xdescribe('further examples', function() {
     beforeEach(function() {
       ptor.get('app/index.html#/bindings');
     });
@@ -183,5 +183,29 @@ describe('finding elements', function() {
             })
           });
     });
+  });
+
+  describe('chained findElements', function() {
+    ptor = protractor.getInstance();
+
+    beforeEach(function() {
+      ptor.get('app/index.html#/nested');
+    });
+
+    it('should differentiate elements with the same binding by chaining',
+        function() {
+          expect(ptor.findElement(
+              protractor.By.binding('item.reusedBinding')).getText()).
+              toEqual('outer');
+          expect(ptor.findElement(protractor.By.id('baz')).
+              findElement(protractor.By.binding('item.resuedBinding')).
+              getText()).
+              toEqual('inner');
+
+          // ptor.findElement(protractor.By.binding('item.reusedBinding')).
+          //   toWireValue().then(function(value) {
+          //     util.puts('WIRE VALUE: ' + util.inspect(value));
+          //   });
+        });
   });
 });
